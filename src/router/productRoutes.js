@@ -6,7 +6,7 @@ const { getAllProducts, getOneProduct } = require("../database/product");
 
 //Define the routes
 
-// /products is defined in index.js already.//
+// /products-> is defined in index.js already.//
 
 //Get all the prodcuts
 router.get("/", async (req, res) => {
