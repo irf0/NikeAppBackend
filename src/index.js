@@ -8,11 +8,7 @@ const cors = require("cors");
 
 const app = express();
 
-const corsOptions = {
-  origin: "*", // Specify the allowed origin(s)
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Specify allowed HTTP methods
-};
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(bodyParser.json());
 

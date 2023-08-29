@@ -8,7 +8,6 @@ const stripe = require("stripe")(
 
 router.post("/intents", async (req, res) => {
   try {
-    // 1.Create a paymentIntent
     const paymentIntent = await stripe.paymentIntents.create({
       amount: req.body.amount,
       currency: "usd",
@@ -17,11 +16,10 @@ router.post("/intents", async (req, res) => {
       },
     });
 
-    //Return the secret
     res.json({ paymentIntent: paymentIntent.client_secret });
-  } catch (error) {
+  } catch (e) {
     res.status(400).json({
-      error: error.message,
+      error: e.message,
     });
   }
 });
