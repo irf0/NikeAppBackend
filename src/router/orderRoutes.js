@@ -11,7 +11,8 @@ router.post("/", async (req, res) => {
   orderData.ref = ref;
 
   const newOrder = await createOrder(orderData);
-  res.status(201).send({ status: "OK", data: newOrder }); //201->means something new created
+  res.status(201).send({ status: "OK", data: newOrder });
+  //201->means something new created
 });
 
 //Track an order by entering a tracking code (reference)

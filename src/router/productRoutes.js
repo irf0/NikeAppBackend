@@ -2,6 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
+const db = require("../database/db");
 const { getAllProducts, getOneProduct } = require("../database/product");
 
 //Define the routes
@@ -11,7 +12,6 @@ const { getAllProducts, getOneProduct } = require("../database/product");
 //Get all the prodcuts
 router.get("/", async (req, res) => {
   const allProducts = await getAllProducts();
-  console.log(allProducts);
   res.send({ status: "OK", data: allProducts });
 });
 
@@ -27,6 +27,36 @@ router.get("/:productId", async (req, res) => {
     }
   } catch (error) {
     res.send({ status: "FAILED", error: error.message });
+  }
+});
+
+//Search a product
+router.post("/search", async (req, res) => {
+  const query = req.query.key; // Get the search query from the request query parameters
+
+  if (!query) {
+    res.status(400).send({ status: "FAILED", error: "Missing search query" });
+  }
+
+  try {
+    const searchResults = await db.products
+      .find({
+        name: { $regex: query, $options: "i" },
+      })
+      .toArray();
+
+    //If there's no results returned by server
+    if (searchResults.length === 0) {
+      res.send({
+        status: "OK",
+        data: [],
+        message: "No products found matching the search query",
+      });
+    } else {
+      res.send({ status: "OK", data: searchResults });
+    }
+  } catch (error) {
+    res.status(500).send({ status: "FAILED", error: error.message });
   }
 });
 
