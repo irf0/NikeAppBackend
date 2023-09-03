@@ -19,7 +19,6 @@ router.post("/", async (req, res) => {
 router.get("/:reference", async (req, res) => {
   try {
     const order = await getOrder(req.params.reference);
-
     if (!order) {
       res.status(404).send({ status: "FAILED", error: "Order Not Found!" });
       return;

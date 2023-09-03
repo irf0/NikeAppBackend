@@ -46,7 +46,7 @@ router.post("/search", async (req, res) => {
       .toArray();
 
     //If there's no results returned by server
-    if (searchResults.length === 0) {
+    if (!searchResults || searchResults.length === 0) {
       res.send({
         status: "OK",
         data: [],
